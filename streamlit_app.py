@@ -68,7 +68,7 @@ if prompt := st.chat_input("Ask the witness a question..."):
 
     # Call Gemini with the Witness Brief as the "System Instruction"
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
+       model_name="models/gemini-1.5-flash",
         system_instruction=st.session_state.instruction
     )
     
