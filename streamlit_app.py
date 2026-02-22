@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 # --- 1. CONFIGURATION (Using Streamlit Secrets) ---
 # This line looks for the key you pasted into the "Advanced Settings" box
-API_KEY = st.secrets["AIzaSyBCqmXRNLfyHgAQDqSrc4cPd2-IKVo7ZuY"]
+API_KEY = st.secrets["GOOGLE_API_KEY"]
 genai.configure(api_key=API_KEY)
 
 # --- 2. WITNESS DATABASE ---
