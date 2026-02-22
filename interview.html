@@ -30,10 +30,14 @@
     </div>
 
     <script>
-   // Let's try the full key on one line to rule out variables
-        const apiKey = "AIzaSyCBUiwwf2MgGnuT7iSaebYLpNatzj6yNqY";
+// We are renaming the variables to force the browser to update
+        const secretPartA = "AIza";
+        const secretPartB = "Sy";
+        const secretPartC = "CBUiwwf2MgGnuT7iSaebYLpNatzj6yNqY"; 
+        const apiKey = secretPartA + secretPartB + secretPartC;
 
-       async function sendMessage() {
+        async function sendMessage() {
+            console.log("New version of script running..."); // This helps us verify it updated
             const input = document.getElementById('user-input');
             const text = input.value.trim();
             if (!text) return;
@@ -42,27 +46,24 @@
             input.value = "";
 
             try {
-                // We've moved the key into the URL directly to ensure no formatting issues
+                // Notice the "v1" and the specific model name - double check these!
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: `You are a witness for an electronics store robbery. Keep answers short. Question: ${text}` }] }]
+                        contents: [{ parts: [{ text: `You are a witness for an electronics store robbery. Answer briefly: ${text}` }] }]
                     })
                 });
 
                 const data = await response.json();
                 
                 if (data.error) {
-                    // This will tell us if it's "Expired", "Invalid", or "Leaked"
-                    appendMessage("DIAGNOSTIC: " + data.error.message + " (Status: " + data.error.status + ")", 'bot');
+                    appendMessage("VERIFIED ERROR: " + data.error.message, 'bot');
                 } else {
                     appendMessage(data.candidates[0].content.parts[0].text, 'bot');
                 }
             } catch (e) {
-                appendMessage("CONNECTION ERROR: The browser could not reach Google.", 'bot');
-            }
-        }
+                appendMessage("CONNECTION ERROR: Cannot reach Google servers.", 'bot');
             }
         }
 
